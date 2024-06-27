@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\GymSlot;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Mail\SlotConfirmationMail;
+use Illuminate\Support\Facades\Mail;
 
 
 class GymSlotController extends Controller
@@ -31,6 +33,7 @@ class GymSlotController extends Controller
         ]);
 
         $user_id = $request->user()->id;
+        $user = $request->user();
 
         $gymSlot = GymSlot::create([
             'user_id' => $user_id,
@@ -38,6 +41,9 @@ class GymSlotController extends Controller
             'start_time' => $request->start_time,
             'end_time' => date('H:i', strtotime($request->start_time) + 3600) // Suma 1 hora al tiempo de inicio
         ]);
+
+        Mail::to($user->email)->send(new SlotConfirmationMail($user, $request->date, $request->start_time));
+
 
         return response()->json([
             "message" => "Slot reservado exitosamente.",

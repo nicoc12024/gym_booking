@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { isSlotDisabled } from "../helpers";
 import useSlots from "../../../utils/hooks/useSlots";
@@ -13,14 +13,15 @@ const useSlotBooking = (hour, dayIndex, date_and_start_time, bookedSlots) => {
   } = useSelector((state) => state.calendar);
 
   const { handleBookSlot } = useSlots();
-  
+
   const { user } = useContext(AuthContext);
 
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const [isLoading, setIsLoading] = useState(false);
 
   const currentTime = new Date(currentTimeString);
 
-  const isBooked = bookedSlots.some(
+  const isBookedByCurrentUser = bookedSlots.some(
     (slot) =>
       slot.user_id === user.id &&
       slot.date === date_and_start_time.date &&
@@ -44,18 +45,20 @@ const useSlotBooking = (hour, dayIndex, date_and_start_time, bookedSlots) => {
     weekOffset
   );
 
-  const bookOrCancelSlot = () => {
+  const bookOrCancelSlot = async () => {
     if (!disabled) {
-      if (!isBooked && !hasUserBooked) {
-        handleBookSlot(date_and_start_time);
-      } else if (isBooked) {
+      setIsLoading(true);
+      if (!isBookedByCurrentUser && !hasUserBooked) {
+        await handleBookSlot(date_and_start_time);
+      } else if (isBookedByCurrentUser) {
         onOpen();
       }
+      setIsLoading(false);
     }
   };
 
   return {
-    isBooked,
+    isBookedByCurrentUser,
     isBookedByOthers,
     hasUserBooked,
     disabled,
@@ -63,6 +66,7 @@ const useSlotBooking = (hour, dayIndex, date_and_start_time, bookedSlots) => {
     isOpen,
     onOpenChange,
     onClose,
+    isLoading,
   };
 };
 
