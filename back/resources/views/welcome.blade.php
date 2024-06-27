@@ -23,18 +23,18 @@
             color: #7f8c8d;
         }
         .footer {
-            background-color: #e2e8f0; /* bg-gray-200 */
-            padding: 24px; /* py-24 */
+            background-color: #e2e8f0; 
+            padding: 24px;
             text-align: center;
             margin-top: 40px;
         }
         .footer-icons a {
-            color: #7f8c8d; /* gray-400 */
+            color: #7f8c8d; 
             margin: 0 10px;
             text-decoration: none;
         }
         .footer-icons a:hover {
-            color: #2c3e50; /* darken the icon on hover */
+            color: #2c3e50; 
         }
     </style>
 </head>
