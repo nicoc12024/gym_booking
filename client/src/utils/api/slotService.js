@@ -35,3 +35,21 @@ export const bookSlot = async (date_and_start_time, token) => {
     throw error;
   }
 };
+
+export const deleteSlot = async (userId, token) => {
+  try {
+    const response = await makeRequest.delete(`/delete-slot/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error while booking slot:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
+};

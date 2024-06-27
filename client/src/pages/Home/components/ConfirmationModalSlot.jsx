@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import {
   Modal,
   ModalContent,
@@ -7,11 +6,10 @@ import {
   ModalFooter,
   Button,
 } from "@nextui-org/react";
+import useSlots from "../../../utils/hooks/useSlots";
 
-const ConfirmationModalSlot = ({ isOpen, onOpenChange, confirmSlot }) => {
-  const { pendingSlotInfo, isCancelling, selectedSlot } = useSelector(
-    (state) => state.slots
-  );
+const ConfirmationModalSlot = ({ isOpen, onOpenChange }) => {
+  const { handleDeleteSlot } = useSlots();
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} className="modal-center">
@@ -20,23 +18,7 @@ const ConfirmationModalSlot = ({ isOpen, onOpenChange, confirmSlot }) => {
           <>
             <ModalHeader className="flex flex-col gap-1">Confirmación</ModalHeader>
             <ModalBody>
-              {isCancelling ? (
-                <p>
-                  Desea cancelar el slot seleccionado para el {pendingSlotInfo.dayName}{" "}
-                  {pendingSlotInfo.date} a las {pendingSlotInfo.hour}hs?
-                </p>
-              ) : selectedSlot ? (
-                <p>
-                  Usted ya tiene un slot confirmado, desea cancelarlo y confirmar para{" "}
-                  {pendingSlotInfo.dayName} {pendingSlotInfo.date} a las{" "}
-                  {pendingSlotInfo.hour}hs.?
-                </p>
-              ) : (
-                <p>
-                  Desea confirmar el slot para el {pendingSlotInfo.dayName}{" "}
-                  {pendingSlotInfo.date} a las {pendingSlotInfo.hour}hs?
-                </p>
-              )}
+              <p>Desea cancelar el slot</p>
             </ModalBody>
             <ModalFooter>
               <Button color="danger" variant="light" onPress={onClose}>
@@ -45,7 +27,7 @@ const ConfirmationModalSlot = ({ isOpen, onOpenChange, confirmSlot }) => {
               <Button
                 color="primary"
                 onPress={() => {
-                  confirmSlot();
+                  handleDeleteSlot();
                   onClose();
                 }}
               >

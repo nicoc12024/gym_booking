@@ -1,4 +1,3 @@
-// src/hooks/useProfile.js
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../state/AuthContext/AuthContext.jsx";
 import { updateProfile, deleteProfile } from "../../utils/api/profileService";

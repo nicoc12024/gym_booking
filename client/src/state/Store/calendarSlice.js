@@ -3,7 +3,7 @@ import { getWeekDates, getCurrentWeekNumber } from "../../pages/Home/helpers";
 
 const initialState = {
   weekOffset: 0,
-  currentTime: new Date().toISOString(), // Almacenar como cadena de texto
+  currentTime: new Date().toISOString(),
   currentWeekNumber: getCurrentWeekNumber(),
   currentWeekDates: getWeekDates().days,
   currentMonths: getWeekDates().months,
@@ -23,7 +23,7 @@ const calendarSlice = createSlice({
       state.currentYearRange = yearRange;
     },
     updateCurrentTime: (state) => {
-      state.currentTime = new Date().toISOString(); // Almacenar como cadena de texto
+      state.currentTime = new Date().toISOString();
     },
     setCurrentWeekDates: (state, action) => {
       state.currentWeekDates = action.payload;

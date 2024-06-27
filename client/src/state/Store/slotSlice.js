@@ -15,5 +15,5 @@ const slotSlice = createSlice({
   },
 });
 
-export const { setBookedSlots } = slotSlice.actions;
+export const { setBookedSlots, bookedSlots } = slotSlice.actions;
 export default slotSlice.reducer;
