@@ -5,7 +5,13 @@ import useSlots from "../../../utils/hooks/useSlots";
 import { AuthContext } from "../../../state/AuthContext/AuthContext";
 import { useDisclosure } from "@nextui-org/react";
 
-const useSlotBooking = (hour, dayIndex, date_and_start_time, bookedSlots) => {
+const useSlotBooking = (
+  hour,
+  dayIndex,
+  date_and_start_time,
+  bookedSlots,
+  setGlobalLoading
+) => {
   const {
     weekOffset,
     currentTime: currentTimeString,
@@ -13,12 +19,9 @@ const useSlotBooking = (hour, dayIndex, date_and_start_time, bookedSlots) => {
   } = useSelector((state) => state.calendar);
 
   const { handleBookSlot } = useSlots();
-
   const { user } = useContext(AuthContext);
-
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
-
   const currentTime = new Date(currentTimeString);
 
   const isBookedByCurrentUser = bookedSlots.some(
@@ -48,12 +51,14 @@ const useSlotBooking = (hour, dayIndex, date_and_start_time, bookedSlots) => {
   const bookOrCancelSlot = async () => {
     if (!disabled) {
       setIsLoading(true);
-      if (!isBookedByCurrentUser && !hasUserBooked) {
+      setGlobalLoading(true);
+      if (!isBookedByCurrentUser) {
         await handleBookSlot(date_and_start_time);
       } else if (isBookedByCurrentUser) {
         onOpen();
       }
       setIsLoading(false);
+      setGlobalLoading(false);
     }
   };
 

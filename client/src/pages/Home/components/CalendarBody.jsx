@@ -1,7 +1,9 @@
+import { useState } from "react";
 import TableRow from "./TableRow";
 import { hours, daysOfWeek } from "../helpers";
 
 const CalendarBody = ({ bookedSlots, currentWeekDates, currentTime }) => {
+  const [globalLoading, setGlobalLoading] = useState(false);
   const currentMonth = currentTime.getMonth();
   const currentYear = currentTime.getFullYear();
 
@@ -29,6 +31,8 @@ const CalendarBody = ({ bookedSlots, currentWeekDates, currentTime }) => {
                 dayIndex={dayIndex}
                 bookedSlots={bookedSlots}
                 date_and_start_time={date_and_start_time}
+                globalLoading={globalLoading}
+                setGlobalLoading={setGlobalLoading}
               />
             );
           })}

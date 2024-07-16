@@ -1,4 +1,12 @@
 import { makeRequest } from "./axios";
+import { toast } from "react-toastify";
+
+const extractErrorMessage = (error) => {
+  if (error.response) {
+    return error.response.data.message || "Error en la solicitud";
+  }
+  return error.message || "Error desconocido";
+};
 
 export const fetchSlots = async (token) => {
   try {
@@ -10,10 +18,8 @@ export const fetchSlots = async (token) => {
 
     return response.data;
   } catch (error) {
-    console.error(
-      "Error while fetching slots:",
-      error.response ? error.response.data : error.message
-    );
+    const errorMessage = extractErrorMessage(error);
+    toast.error(errorMessage);
     throw error;
   }
 };
@@ -28,28 +34,25 @@ export const bookSlot = async (date_and_start_time, token) => {
 
     return response.data;
   } catch (error) {
-    console.error(
-      "Error while booking slot:",
-      error.response ? error.response.data : error.message
-    );
+    const errorMessage = extractErrorMessage(error);
+    toast.error(errorMessage);
     throw error;
   }
 };
 
-export const deleteSlot = async (userId, token) => {
+export const deleteSlot = async (date_and_start_time, token) => {
   try {
-    const response = await makeRequest.delete(`/delete-slot/${userId}`, {
+    const response = await makeRequest.delete(`/delete-slot/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      data: date_and_start_time,
     });
 
     return response.data;
   } catch (error) {
-    console.error(
-      "Error while booking slot:",
-      error.response ? error.response.data : error.message
-    );
+    const errorMessage = extractErrorMessage(error);
+    toast.error(errorMessage);
     throw error;
   }
 };

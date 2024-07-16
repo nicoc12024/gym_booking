@@ -8,7 +8,7 @@ import {
 } from "@nextui-org/react";
 import useSlots from "../../../utils/hooks/useSlots";
 
-const ConfirmationModalSlot = ({ isOpen, onOpenChange }) => {
+const ConfirmationModalSlot = ({ isOpen, onOpenChange, date_and_start_time }) => {
   const { handleDeleteSlot } = useSlots();
 
   return (
@@ -27,7 +27,7 @@ const ConfirmationModalSlot = ({ isOpen, onOpenChange }) => {
               <Button
                 color="primary"
                 onPress={() => {
-                  handleDeleteSlot();
+                  handleDeleteSlot(date_and_start_time);
                   onClose();
                 }}
               >

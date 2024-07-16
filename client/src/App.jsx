@@ -12,6 +12,7 @@ import PublicRoute from "./PublicRoute";
 import Public from "./pages/Public/Public";
 import { Provider } from "react-redux";
 import store from "./state/Store/index";
+import "react-notifications/lib/notifications.css";
 
 function App() {
   return (
