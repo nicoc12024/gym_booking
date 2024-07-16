@@ -22,7 +22,6 @@ class CreateGymSlotsTable extends Migration
             $table->timestamps();
 
             $table->unique(['date', 'start_time']); 
-            $table->unique(['user_id']); 
         });
     }
 

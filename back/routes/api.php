@@ -17,6 +17,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/update-user/{id}', [AuthController::class, 'updateUser']);
     Route::delete('/delete-user/{id}', [AuthController::class, 'deleteUser']);
     Route::post('/book-slot', [GymSlotController::class, 'store']);
-    Route::delete('/delete-slot/{user_id}', [GymSlotController::class, 'deleteSlot']);
+    Route::delete('/delete-slot', [GymSlotController::class, 'deleteSlot']);
     Route::get('/gym-slots', [GymSlotController::class, 'index']);
 });
